@@ -41,6 +41,14 @@
                     <input type="text" class="form-control" name="name" id="athletes_name_show" value="{{ $athlete->name }}" disabled>
                 </div>
                 <div class="form-group">
+                    <label for="athletes_pool_house_show">Sarana Olahraga Naungan</label>
+                    <input type="text" class="form-control" name="name" id="athletes_pool_house_show" value="{{ $athlete->pool_houses->name ?? $athlete->another_pool_house }}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="athletes_pool_house_show">Handicap/Klasemen</label>
+                    <input type="text" class="form-control" name="name" id="athletes_handicap_id_show" value="{{ $athlete->standings->handicaps->name }}" disabled>
+                </div>
+                <div class="form-group">
                     <label for="athletes_born_date_show">Tanggal Lahir</label>
                     <input type="text" class="form-control" name="athletes_born_date" id="athletes_born_date_show" value="{{ $athlete->born_date }}" disabled>
                 </div>

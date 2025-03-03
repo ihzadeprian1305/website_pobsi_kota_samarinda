@@ -59,6 +59,8 @@ Route::get('/documents/{document_category:name}/{document:slug}', [UserDocumentC
 Route::get('/athlete-informations', [UserAthleteInformationController::class, 'index']);
 Route::get('/pool-houses', [UserPoolHouseController::class, 'index']);
 Route::get('/pool-houses/{pool_house:name}', [UserPoolHouseController::class, 'show']);
+Route::get('/athlete-informations/athletes', [UserAthleteInformationController::class, 'athlete']);
+Route::get('/athlete-informations/athletes/{athlete:name}', [UserAthleteInformationController::class, 'athleteDetail']);
 
 Route::get('/123', function () {
     return view('user.news_details');
@@ -83,6 +85,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/admin/get-values/get-handicap-dropdown-values', [GetValueController::class, 'getHandicapsDropdownValues']);
     Route::get('/admin/get-values/get-document-category-dropdown-values', [GetValueController::class, 'getDocumentCategoriesDropdownValues']);
     Route::get('/admin/get-values/get-structure-position-dropdown-values', [GetValueController::class, 'getStructurePositionsDropdownValues']);
+    Route::get('/admin/get-values/get-pool-house-dropdown-values', [GetValueController::class, 'getPoolHousesDropdownValues']);
 
     // Admin // Dashboard
     Route::get('/admin/dashboard', [DashboardController::class, 'index']);

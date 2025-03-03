@@ -1144,6 +1144,129 @@ Gaming Library Style
     color: #fefd02;
 }
 
+.athlete {
+  margin-top: 60px;
+  padding: 30px;
+  background-color: #1f2122;
+  border-radius: 23px;
+}
+
+.athlete .item {
+  border-bottom: 1px solid #27292a;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+.athlete .item ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Align items vertically */
+    flex-wrap: wrap; /* Prevent overflow on small screens */
+    padding: 0;
+}
+
+.athlete .last-item {
+  margin-bottom: 30px;
+}
+
+.profile-library .last-item {
+  border-bottom: none;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.athlete .item ul li {
+  margin-top: 15px;
+}
+
+.athlete .item ul li img {
+  margin-top: -30px;
+}
+
+.athlete .img-athlete {
+	max-width: 200px;
+    min-height: 150px;
+	border-radius: 16px;
+}
+
+.athlete .item ul li {
+  display: inline-block;
+  width: 17%;
+}
+
+.athlete .item ul li:first-child {
+  width: 200px;
+}
+
+.athlete .item ul li:last-child {
+  width: 15%;
+  text-align: right;
+}
+
+.athlete .item ul li h4 {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.athlete .item ul li span {
+  color: #666;
+  font-size: 14px;
+}
+
+.athlete .main-button {
+  text-align: center;
+  margin-bottom: -53px;
+}
+
+.athlete-detail {
+    padding: 30px;
+    background-color: #1f2122;
+    border-radius: 23px;
+}
+
+.athlete-detail-item {
+    max-height: 400px;
+    
+}
+
+.athlete-detail-item .thumb {
+    height: 400px; /* Set a fixed height */
+    overflow: hidden; /* Prevent any overflow */
+}
+
+.athlete-detail-item img {
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 23px;
+}
+
+.athlete-detail-map-container {
+    position: relative;
+    width: 100%;
+    height: 350px;
+}
+
+.athlete-detail-map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 23px;
+}
+
+.athlete-detail-content {
+    padding: 30px;
+    background-color: #27292a;
+    border-radius: 23px;
+}
+
+.athlete-detail-content h3, .athlete-detail-content h4{
+    color: #fefd02;
+}
+
 
 
 /* .document-category-detail-file {

@@ -60,6 +60,33 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="athletes_pool_house_id_update">Sarana Olahraga Naungan</label>
+                        <fieldset class="form-group">
+                            <select class="form-select" name="pool_house_id" id="athletes_pool_house_id_update" value="{{ old('pool_house_id', $athlete->pool_house_id ?? '-') }}">
+                            </select>
+                        </fieldset>
+                        @error('pool_house_id')
+                            <div class="text-danger mt-2" role="alert" id="alert_athletes_pool_house_id_update">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="athletes_another_pool_house_update" id="label_athletes_another_pool_house_update">Sarana Olahraga Naungan Lainnya</label>
+                        <input type="text" class="form-control" id="athletes_another_pool_house_update" name="another_pool_house" value="{{ old('another_pool_house', $athlete->another_pool_house) }}" placeholder="Masukkan Rumah Biliar Lainnya">
+                        @error('another_pool_house')
+                            <div class="text-danger mt-2" role="alert" id="alert_athletes_another_pool_house_update">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="athletes_handicap_update">Handicap/Klasemen</label>
+                        <fieldset class="form-group">
+                            <select class="form-select" name="handicap_id" id="athletes_handicap_id_update" value="{{ $athlete->standings->handicap_id }}">
+                            </select>
+                        </fieldset>
+                        @error('handicap_id')
+                            <div class="text-danger mt-2" role="alert" id="alert_athletes_handicap_id_update">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="athletes_born_date_update">Tanggal Lahir</label>
                         <input type="date" class="form-control flatpickr-no-config mb-3" name="born_date" id="athletes_born_date_update" value="{{ old('born_date', $athlete->born_date) }}" placeholder="Pilih Tanggal Lahir Atlet">
                         @error('born_date')
@@ -127,6 +154,87 @@
     var athletesSexEditDropdown = null;
 
     $(document).ready(function(){
+        if($('#athletes_pool_house_id_update').val() === ''){
+            $('#athletes_another_pool_house_update').hide();
+            $('#label_athletes_another_pool_house_update').hide();
+        }
+        if($('#athletes_pool_house_id_update').val() === '-'){
+            $('#athletes_another_pool_house_update').show();
+            $('#label_athletes_another_pool_house_update').show();
+        }
+
+        athletesPoolHouseUpdateDropdown = new Choices('#athletes_pool_house_id_update', {
+            allowHTML: true,
+            searchPlaceholderValue: 'Cari',
+            placeholderValue: 'Pilih Rumah Biliar'
+        });
+
+        athletesPoolHouseUpdateDropdown.setChoices(function() {
+            return new Promise(function(resolve, reject) {
+                $.get('/admin/get-values/get-pool-house-dropdown-values', function(data) {
+                    var choices = [];
+                    choices.push({ label: 'Lainnya', value: '-' });
+                    $.each(data, function(key, value) {
+                        choices.push({ label: value, value: key });
+                    });
+
+                    var oldValue = "{{ old('pool_house_id', $athlete->pool_house_id ?? '-') }}";
+
+                    choices.forEach(function(choice) {
+                        if (choice.value == oldValue) {
+                            choice.selected = true;
+                        }
+                    });
+
+                    resolve(choices);
+                }).fail(reject);
+            });
+        }, 'value', 'label', true);
+
+        $('#athletes_pool_house_id_update').on('change', function() {
+            var selectedValue = $(this).val();
+            if (selectedValue === '-') {
+                $('#athletes_another_pool_house_update').show();
+                $('#label_athletes_another_pool_house_update').show();
+            } else {
+                $('#athletes_another_pool_house_update').hide();
+                $('#athletes_another_pool_house_update').val('');
+                $('#label_athletes_another_pool_house_update').hide();
+            }
+        });
+
+        if ($('#athletes_pool_house_id_update').val() === '-') {
+            $('#athletes_another_pool_house_update').show();
+            $('#label_athletes_another_pool_house_update').show();
+        }
+
+        var handicapUpdateDropdown = new Choices('#athletes_handicap_id_update', {
+            allowHTML: true,
+            searchPlaceholderValue: 'Cari',
+            placeholderValue: 'Pilih Handicap/Klasemen'
+        });
+
+        handicapUpdateDropdown.setChoices(function() {
+            return new Promise(function(resolve, reject) {
+                $.get('/admin/get-values/get-handicap-dropdown-values', function(data) {
+                    var choices = [];
+                    $.each(data, function(key, value) {
+                        choices.push({ label: value, value: key });
+                    });
+
+                    var oldValue = "{{ old('handicap_id', $athlete->standings->handicap_id) }}";
+
+                    choices.forEach(function(choice) {
+                        if (choice.value == oldValue) {
+                            choice.selected = true;
+                        }
+                    });
+
+                    resolve(choices);
+                }).fail(reject);
+            });
+        }, 'value', 'label', true);
+
         athletesSexEditDropdown = new Choices('#athletes_sex_edit', {
             allowHTML: true,
             searchEnabled: false,

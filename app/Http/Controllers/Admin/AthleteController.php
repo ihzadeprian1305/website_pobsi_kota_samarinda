@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Athlete;
 use App\Models\AthleteImage;
+use App\Models\Standing;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,25 +54,51 @@ class AthleteController extends Controller
     public function store(Request $request)
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'image' => ['required', 'file', 'mimes:jpeg,png,jpg', 'max:2048'],
-                'name' => ['required'],
-                'born_date' => ['required'],
-                'sex' => ['required'],
-                'career_description' => ['required'],
-            ]);
+            if($request->pool_house_id == '-'){
+                $validator = Validator::make($request->all(), [
+                    'image' => ['required', 'file', 'mimes:jpeg,png,jpg', 'max:2048'],
+                    'name' => ['required'],
+                    'born_date' => ['required'],
+                    'pool_house_id' => ['required'],
+                    'another_pool_house' => ['required'],
+                    'handicap_id' => ['required'],
+                    'sex' => ['required'],
+                    'career_description' => ['required'],
+                ]);
+            } else {
+                $validator = Validator::make($request->all(), [
+                    'image' => ['required', 'file', 'mimes:jpeg,png,jpg', 'max:2048'],
+                    'name' => ['required'],
+                    'born_date' => ['required'],
+                    'pool_house_id' => ['required'],
+                    'handicap_id' => ['required'],
+                    'sex' => ['required'],
+                    'career_description' => ['required'],
+                ]);
+            }
 
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
             DB::transaction(function() use($request) {
-                $athlete = Athlete::create([
-                    'name' => $request->name,
-                    'born_date' => $request->born_date,
-                    'sex' => $request->sex,
-                    'career_description' => $request->career_description,
-                ]);
+                if($request->pool_house_id == '-' && $request->another_pool_house){
+                    $athlete = Athlete::create([
+                        'name' => $request->name,
+                        'born_date' => $request->born_date,
+                        'another_pool_house' => $request->another_pool_house,
+                        'sex' => $request->sex,
+                        'career_description' => $request->career_description,
+                    ]);
+                }else{
+                    $athlete = Athlete::create([
+                        'name' => $request->name,
+                        'born_date' => $request->born_date,
+                        'pool_house_id' => $request->pool_house_id,
+                        'sex' => $request->sex,
+                        'career_description' => $request->career_description,
+                    ]);
+                }
 
                 $athlete_id = $athlete->id;
 
@@ -85,6 +112,12 @@ class AthleteController extends Controller
                     'image' => $imagePath,
                     'image_name' => $originalName,
                     'athlete_id' => $athlete_id
+                ]);
+
+                Standing::create([
+                    'athlete_id' => $athlete_id,
+                    'handicap_id' => $request->handicap_id,
+                    'total_points' => 0,
                 ]);
             });
 
@@ -125,13 +158,28 @@ class AthleteController extends Controller
     public function update(Request $request, Athlete $athlete)
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'image' => ['file', 'mimes:jpeg,png,jpg', 'max:2048'],
-                'name' => ['required'],
-                'born_date' => ['required'],
-                'sex' => ['required'],
-                'career_description' => ['required'],
-            ]);
+            if($request->pool_house_id == '-'){
+                $validator = Validator::make($request->all(), [
+                    'image' => ['file', 'mimes:jpeg,png,jpg', 'max:2048'],
+                    'name' => ['required'],
+                    'born_date' => ['required'],
+                    'pool_house_id' => ['required'],
+                    'another_pool_house' => ['required'],
+                    'handicap_id' => ['required'],
+                    'sex' => ['required'],
+                    'career_description' => ['required'],
+                ]);
+            } else {
+                $validator = Validator::make($request->all(), [
+                    'image' => ['file', 'mimes:jpeg,png,jpg', 'max:2048'],
+                    'name' => ['required'],
+                    'born_date' => ['required'],
+                    'pool_house_id' => ['required'],
+                    'handicap_id' => ['required'],
+                    'sex' => ['required'],
+                    'career_description' => ['required'],
+                ]);
+            }
 
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator)->withInput();
@@ -144,12 +192,25 @@ class AthleteController extends Controller
                         File::delete('storage/'. $athlete_image);
                     }
 
-                    $athlete->update([
-                        'name' => $request->name,
-                        'born_date' => $request->born_date,
-                        'sex' => $request->sex,
-                        'career_description' => $request->career_description,
-                    ]);
+                    if($request->pool_house_id == '-' && $request->another_pool_house){
+                        $athlete->update([
+                            'name' => $request->name,
+                            'born_date' => $request->born_date,
+                            'pool_house_id' => null,
+                            'another_pool_house' => $request->another_pool_house,
+                            'sex' => $request->sex,
+                            'career_description' => $request->career_description,
+                        ]);
+                    } else {
+                        $athlete->update([
+                            'name' => $request->name,
+                            'born_date' => $request->born_date,
+                            'pool_house_id' => $request->pool_house_id,
+                            'another_pool_house' => null,
+                            'sex' => $request->sex,
+                            'career_description' => $request->career_description,
+                        ]);
+                    }
 
                     $originalName = $request->file('image')->getClientOriginalName();
 
@@ -161,12 +222,33 @@ class AthleteController extends Controller
                         'image' => $imagePath,
                         'image_name' => $originalName,
                     ]);
+
+                    $athlete->standings->update([
+                        'handicap_id' => $request->handicap_id,
+                    ]);
                 } else{
-                    $athlete->update([
-                        'name' => $request->name,
-                        'born_date' => $request->born_date,
-                        'sex' => $request->sex,
-                        'career_description' => $request->career_description,
+                    if($request->pool_house_id == '-' && $request->another_pool_house){
+                        $athlete->update([
+                            'name' => $request->name,
+                            'born_date' => $request->born_date,
+                            'pool_house_id' => null,
+                            'another_pool_house' => $request->another_pool_house,
+                            'sex' => $request->sex,
+                            'career_description' => $request->career_description,
+                        ]);
+                    } else {
+                        $athlete->update([
+                            'name' => $request->name,
+                            'born_date' => $request->born_date,
+                            'pool_house_id' => $request->pool_house_id,
+                            'another_pool_house' => null,
+                            'sex' => $request->sex,
+                            'career_description' => $request->career_description,
+                        ]);
+                    }
+
+                    $athlete->standings->update([
+                        'handicap_id' => $request->handicap_id,
                     ]);
                 }
             });

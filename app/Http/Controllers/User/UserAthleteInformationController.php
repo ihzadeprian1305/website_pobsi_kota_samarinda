@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Athlete;
 
 class UserAthleteInformationController extends Controller
 {
@@ -61,5 +62,19 @@ class UserAthleteInformationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function athlete()
+    {
+        $data['athletes'] = Athlete::paginate(10);
+
+        return view('user.athletes', $data);
+    }
+    
+    public function athleteDetail(Athlete $athlete)
+    {
+        $data['athlete'] = $athlete;
+
+        return view('user.athlete_details', $data);
     }
 }

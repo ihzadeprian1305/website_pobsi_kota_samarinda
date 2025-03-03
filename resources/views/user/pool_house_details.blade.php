@@ -20,7 +20,7 @@
             <h4 class="text-center mb-3">Tidak Ada Foto Sarana Olahraga</h4>
         @endif
         <div class="pool-house-detail-map-container mt-3">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15958.709160865345!2d117.11364538715821!3d-0.4817461999999868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2df67fbc175afa69%3A0xb3e54cb8f53996b9!2sMARKAS%20BILLIARD%20SAMARINDA!5e0!3m2!1sid!2sid!4v1739330406223!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            {!! html_entity_decode($poolHouse->link_address) !!}
         </div>
         <div class="row">
             <div class="col-12">

@@ -17,6 +17,9 @@
             </ul>
         </div>
         @endforeach
+        <div class="d-flex justify-content-center">
+            {{ $pool_houses->links() }}
+        </div>
     </div>
 </div>
 <!-- ***** Gaming Library End ***** -->

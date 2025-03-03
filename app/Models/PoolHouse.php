@@ -16,4 +16,8 @@ class PoolHouse extends Model
     public function pool_house_images(){
         return $this->hasMany(PoolHouseImage::class, 'pool_house_id');
     }
+
+    public function athletes(){
+        return $this->hasMany(Athlete::class, 'pool_house_id');
+    }
 }

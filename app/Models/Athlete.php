@@ -20,4 +20,8 @@ class Athlete extends Model
     public function athlete_images(){
         return $this->hasOne(AthleteImage::class, 'athlete_id');
     }
+
+    public function pool_houses(){
+        return $this->belongsTo(PoolHouse::class, 'pool_house_id');
+    }
 }

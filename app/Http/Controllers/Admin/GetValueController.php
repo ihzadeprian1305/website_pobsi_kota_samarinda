@@ -11,6 +11,7 @@ use App\Models\NewsTag;
 use App\Models\StructurePosition;
 use App\Models\User;
 use App\Models\UserLevel;
+use App\Models\PoolHouse;
 use Illuminate\Http\Request;
 
 class GetValueController extends Controller
@@ -67,6 +68,13 @@ class GetValueController extends Controller
     public function getStructurePositionsDropdownValues()
     {
         $values = StructurePosition::pluck('name', 'id');
+
+        return response()->json($values);
+    }
+    
+    public function getPoolHousesDropdownValues()
+    {
+        $values = PoolHouse::pluck('name', 'id');
 
         return response()->json($values);
     }
