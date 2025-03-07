@@ -1191,11 +1191,11 @@ Gaming Library Style
 
 .athlete .item ul li {
   display: inline-block;
-  width: 17%;
+  /* width: 17%; */
 }
 
 .athlete .item ul li:first-child {
-  width: 200px;
+  /* width: 200px; */
 }
 
 .athlete .item ul li:last-child {
@@ -1226,7 +1226,7 @@ Gaming Library Style
 
 .athlete-detail-item {
     max-height: 400px;
-    
+
 }
 
 .athlete-detail-item .thumb {
@@ -1265,6 +1265,89 @@ Gaming Library Style
 
 .athlete-detail-content h3, .athlete-detail-content h4{
     color: #fefd02;
+}
+
+.standing {
+    margin-top: 60px;
+    padding: 30px;
+    background-color: #1f2122;
+    border-radius: 23px;
+  }
+
+  .standing .item {
+    border-bottom: 1px solid #27292a;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+
+  .standing .item ul {
+      display: flex;
+      justify-content: space-between;
+      align-items: center; /* Align items vertically */
+      flex-wrap: wrap; /* Prevent overflow on small screens */
+      padding: 0;
+  }
+
+  .standing .last-item {
+    margin-bottom: 30px;
+  }
+
+  .profile-library .last-item {
+    border-bottom: none;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+  }
+
+  .standing .item ul li {
+    margin-top: 15px;
+  }
+
+  .standing .item ul li img {
+    margin-top: -30px;
+  }
+
+  .standing .img-standing {
+      max-width: 200px;
+      min-height: 150px;
+      border-radius: 16px;
+  }
+
+  .standing .item ul li {
+    display: inline-block;
+    /* width: 17%; */
+  }
+
+  .standing .item ul li:first-child {
+    /* width: 200px; */
+  }
+
+  .standing .item ul li:last-child {
+    width: 15%;
+    text-align: right;
+  }
+
+  .standing .item ul li h4 {
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+
+  .standing .item ul li span {
+    color: #666;
+    font-size: 14px;
+  }
+
+  .standing .main-button {
+    text-align: center;
+    margin-bottom: -53px;
+  }
+
+  .grid-item {
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+.grid-item img{
+    width:100%;
 }
 
 

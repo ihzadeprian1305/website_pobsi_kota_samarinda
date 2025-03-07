@@ -17,6 +17,7 @@
     <link rel="stylesheet" id="theme-stylesheet" href="{{ asset('assets/user/assets/css/templatemo-cyborg-gaming.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/user/assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/user/assets/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/user/assets/js/fancybox/fancybox.css') }}">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 <!--
 

@@ -9,10 +9,11 @@
         @foreach ($athletes as $a)
         <div class="item">
             <ul>
+                <li><h4>{{ $loop->iteration }}</h4></li>
                 <li><img src="{{ asset('storage/' . $a->athlete_images->image) }}" alt="" class="img-athlete"></li>
                 <li><h4>{{ $a->name }}</h4></li>
-                <li><h4>Tim</h4><san>{{ $a->pool_houses->name ?? $a->another_pool_house }}</san></li>
-                <li><h4>Handicap</h4><san>{{ $a->standings->handicaps->name }}</san></li>
+                <li><h4>Tim</h4><span>{{ $a->pool_houses->name ?? $a->another_pool_house }}</span></li>
+                <li><h4>Handicap</h4><span>{{ $a->standings->handicaps->name }}</span></li>
                 <li><div class="main-border-button"><a href="{{ url('/athlete-informations/athletes/' . $a->name) }}">Lihat</a></div></li>
             </ul>
         </div>

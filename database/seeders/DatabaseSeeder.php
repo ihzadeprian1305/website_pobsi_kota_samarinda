@@ -246,7 +246,7 @@ class DatabaseSeeder extends Seeder
 
         Handicap::create([
             'name' => '2',
-            'description' => 'Handicap 3B merupakan Handicap di bawah Handicap 2'
+            'description' => 'Handicap 2 merupakan Handicap di bawah Handicap 3B'
         ]);
 
         Handicap::create([
@@ -276,7 +276,7 @@ class DatabaseSeeder extends Seeder
 
         Handicap::create([
             'name' => '7',
-            'description' => 'Handicap 6 merupakan Handicap di atas Handicap 7'
+            'description' => 'Handicap 7 merupakan Handicap di atas Handicap 6'
         ]);
 
         DocumentCategory::create([

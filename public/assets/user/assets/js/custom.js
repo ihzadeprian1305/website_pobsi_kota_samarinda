@@ -128,6 +128,18 @@
                 }
             }
 
+            $('.grid').masonry({
+                // options
+                itemSelector: '.grid-item',
+                columnWidth: 200,
+                gutter: 10,
+              });
+
+              Fancybox.bind("[data-fancybox]", {
+                // Your custom options
+              });
+
+
 	$('.owl-features').owlCarousel({
 		items:1,
 		loop:true,

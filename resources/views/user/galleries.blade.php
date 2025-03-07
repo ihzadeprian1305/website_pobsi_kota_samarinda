@@ -10,18 +10,18 @@
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-6 col-sm-12">
-                        <a href="{{ url('/athlete-informations/athletes') }}">
+                        <a href="{{ url('/galleries/image-galleries') }}">
                             <div class="item">
-                                <img src="{{ asset('assets/static/images/athlete-menu-image/athlete-menu-image.png') }}" alt="">
-                                <h4>Atlet<br><span>Lihat Semua Atlet POBSI Kota Samarinda</span></h4>
+                                <img src="{{ asset('assets/static/images/gallery-menu-image/image-menu-image.jpg') }}" alt="">
+                                <h4>Gambar<br><span>Lihat Semua Galeri Gambar POBSI Kota Samarinda</span></h4>
                             </div>
                         </a>
                         </div>
                         <div class="col-lg-6 col-sm-12">
-                        <a href="{{ url('/athlete-informations/standings') }}">
+                        <a href="{{ url('/galleries/video-galleries') }}">
                             <div class="item">
-                                <img src="{{ asset('assets/static/images/athlete-menu-image/handicap-menu-image.png') }}" alt="">
-                                <h4>Handicap<br><span>Lihat Handicap Atlet POBSI Kota Samarinda</span></h4>
+                                <img src="{{ asset('assets/static/images/gallery-menu-image/video-menu-image.jpg') }}" alt="">
+                                <h4>Video<br><span>Lihat Semua Galeri Video POBSI Kota Samarinda</span></h4>
                             </div>
                         </a>
                         </div>

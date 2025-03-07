@@ -23,6 +23,7 @@ use App\Http\Controllers\User\UserHomeController;
 use App\Http\Controllers\User\UserNewsController;
 use App\Http\Controllers\User\UserPoolHouseController;
 use App\Http\Controllers\User\UserStructureController;
+use App\Http\Controllers\User\UserGalleryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,11 +57,18 @@ Route::get('/documents/{document_category:name}/{document:slug}', [UserDocumentC
 // Route::get('/documents/document-categories', [UserDocumentController::class, 'documentCategories']);
 // Route::get('/documents/document-categories/{document_category}', [UserDocumentController::class, 'documentCategoriesDetail']);
 // Route::get('/documents/document-authors/{user}', [UserDocumentController::class, 'documentAuthorsDetail']);
-Route::get('/athlete-informations', [UserAthleteInformationController::class, 'index']);
 Route::get('/pool-houses', [UserPoolHouseController::class, 'index']);
 Route::get('/pool-houses/{pool_house:name}', [UserPoolHouseController::class, 'show']);
+Route::get('/athlete-informations', [UserAthleteInformationController::class, 'index']);
 Route::get('/athlete-informations/athletes', [UserAthleteInformationController::class, 'athlete']);
 Route::get('/athlete-informations/athletes/{athlete:name}', [UserAthleteInformationController::class, 'athleteDetail']);
+Route::get('/athlete-informations/standing_informations', [UserAthleteInformationController::class, 'standingIndex']);
+Route::get('/athlete-informations/standings/{handicap:name}', [UserAthleteInformationController::class, 'standing']);
+Route::get('/galleries', [UserGalleryController::class, 'index']);
+Route::get('/galleries/image-galleries', [UserGalleryController::class, 'imageGallery']);
+Route::get('/galleries/image-galleries/{image_gallery}', [UserGalleryController::class, 'imageGalleryDetail']);
+Route::get('/galleries/video-galleries', [UserGalleryController::class, 'videoGallery']);
+Route::get('/galleries/video-galleries/{video_gallery}', [UserGalleryController::class, 'videoGalleryDetail']);
 
 Route::get('/123', function () {
     return view('user.news_details');

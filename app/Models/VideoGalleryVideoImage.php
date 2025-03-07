@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ImageGalleryImage extends Model
+class VideoGalleryVideoImage extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class ImageGalleryImage extends Model
         'id',
     ];
 
-    public function image_galleries(){
-        return $this->belongsTo(ImageGallery::class, 'image_gallery_id');
+    public function video_gallery_videos(){
+        return $this->belongsTo(VideoGalleryVideo::class, 'video_gallery_video_id');
     }
 }

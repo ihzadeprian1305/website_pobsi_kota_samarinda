@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\VideoGallery;
 use App\Models\VideoGalleryVideo;
+use App\Models\VideoGalleryVideoImage;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use FFMpeg\FFMpeg;
+use FFMpeg\Coordinate\TimeCode;
+use Illuminate\Support\Facades\Storage;
 
 class VideoGalleryController extends Controller
 {
@@ -79,11 +83,13 @@ class VideoGalleryController extends Controller
 
                     $videoPath = $video->storeAs('video-gallery-videos', $uniqueName);
 
-                    VideoGalleryVideo::create([
+                    $videoGalleryVideo = VideoGalleryVideo::create([
                         'video_gallery_id' => $video_gallery_id,
                         'video' => $videoPath,
                         'video_name' => $originalName,
                     ]);
+
+                    $this->generateImage($videoGalleryVideo);
                 }
             });
 
@@ -157,11 +163,13 @@ class VideoGalleryController extends Controller
 
                         $videoPath = $video->storeAs('video-gallery-videos', $uniqueName);
 
-                        VideoGalleryVideo::create([
+                        $videoGalleryVideo = VideoGalleryVideo::create([
                             'video_gallery_id' => $videoGallery->id,
                             'video' => $videoPath,
                             'video_name' => $originalName,
                         ]);
+
+                        $this->generateImage($videoGalleryVideo);
                     }
                 } else{
                     $videoGallery->update([
@@ -190,6 +198,13 @@ class VideoGalleryController extends Controller
                         File::delete('storage/'. $vgv->video);
                     }
 
+                    foreach ($vgv->video_gallery_video_images as $vgvi) {
+                        if (File::exists('storage/' . $vgvi->image)) {
+                            File::delete('storage/' . $vgvi->image);
+                        }
+                    }
+
+                    $vgv->video_gallery_video_images()->delete();
                 }
 
                 $videoGallery->video_gallery_videos()->delete();
@@ -213,5 +228,35 @@ class VideoGalleryController extends Controller
         $videoGalleryVideo->delete();
 
         return redirect()->back()->with('success', 'Data Foto Galeri Foto Berhasil Dihapus');
+    }
+
+    public function generateImage(VideoGalleryVideo $videoGalleryVideo)
+    {
+        if (!Storage::exists('video-gallery-video-images')) {
+            Storage::makeDirectory('video-gallery-video-images', 0755, true); // Permissions and recursive
+        }
+
+        $ffmpeg = FFMpeg::create([
+            'ffmpeg.binaries'  => 'C:\ffmpeg\bin/ffmpeg.exe',
+            'ffprobe.binaries' => 'C:\ffmpeg\bin/ffprobe.exe',
+            'timeout'          => 3600,
+            'ffmpeg.threads'   => 12,
+        ]);
+
+        $video = $ffmpeg->open(public_path('storage/'.$videoGalleryVideo->video));
+
+        $thumbnailPath = 'video-gallery-video-images/' . pathinfo($videoGalleryVideo->video_name, PATHINFO_FILENAME) . '.jpg';
+
+        $imageName = pathinfo($videoGalleryVideo->video_name, PATHINFO_FILENAME) . '.jpg';
+
+        $videoGalleryVideoImagePath = $video->frame(TimeCode::fromSeconds(5))->save(public_path('storage/'.$thumbnailPath));
+
+        VideoGalleryVideoImage::create([
+            'video_gallery_video_id' => $videoGalleryVideo->id,
+            'image' => $thumbnailPath,
+            'image_name' => $imageName,
+        ]);
+
+        return response()->json(['success' => 200]);
     }
 }
