@@ -24,6 +24,7 @@ use App\Http\Controllers\User\UserNewsController;
 use App\Http\Controllers\User\UserPoolHouseController;
 use App\Http\Controllers\User\UserStructureController;
 use App\Http\Controllers\User\UserGalleryController;
+use App\Http\Controllers\User\UserAgendaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,6 +70,7 @@ Route::get('/galleries/image-galleries', [UserGalleryController::class, 'imageGa
 Route::get('/galleries/image-galleries/{image_gallery}', [UserGalleryController::class, 'imageGalleryDetail']);
 Route::get('/galleries/video-galleries', [UserGalleryController::class, 'videoGallery']);
 Route::get('/galleries/video-galleries/{video_gallery}', [UserGalleryController::class, 'videoGalleryDetail']);
+Route::get('/agendas', [UserAgendaController::class, 'index']);
 
 Route::get('/123', function () {
     return view('user.news_details');

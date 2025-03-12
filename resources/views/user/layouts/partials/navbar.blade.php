@@ -24,7 +24,7 @@
                         <li><a href="{{ url('/athlete-informations') }}" class="{{ Request::is('athlete-informations*') ? 'active' : '' }}">Info Atlet</a></li>
                         <li><a href="{{ url('/news') }}" class="{{ Request::is('news*') ? 'active' : '' }}">Berita</a></li>
                         <li><a href="{{ url('/documents') }}" class="{{ Request::is('documents*') ? 'active' : '' }}">Dokumen</a></li>
-                        <li><a href="streams.html">Agenda</a></li>
+                        <li><a href="{{ url('/agendas') }}" class="{{ Request::is('agendas*') ? 'active' : '' }}">Agenda</a></li>
                         <li><a href="{{ url('/galleries') }}" class="{{ Request::is('galleries*') ? 'active' : '' }}">Galeri</a></li>
                         {{-- <li><a href="profile.html">Profile <img src="assets/images/profile-header.jpg" alt=""></a></li> --}}
                         <li>
