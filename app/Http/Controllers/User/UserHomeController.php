@@ -19,6 +19,13 @@ class UserHomeController extends Controller
     public function index()
     {
         try {
+            $startDate = Carbon::now()->subDay(7);
+            $endDate = Carbon::now()->addDay(7);
+
+            $data['startDate'] = $startDate->format('Y-m-d');
+            $data['endDate'] = $endDate->format('Y-m-d');
+            $data['agendas'] = Agenda::whereBetween('date', [$startDate, $endDate])->get();
+
             $data['home_sliders'] = HomeSlider::with('home_slider_images')->limit(3)->get();
             $data['news'] = News::with(['news_categories'])->whereHas('news_categories', function ($query) {
                 $query->where('name', 'Berita');

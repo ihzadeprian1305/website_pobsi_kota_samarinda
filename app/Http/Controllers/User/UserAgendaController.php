@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Agenda;
+use Exception;
 
 class UserAgendaController extends Controller
 {
@@ -14,17 +15,18 @@ class UserAgendaController extends Controller
      */
     public function index()
     {
-        // $data['agendas'] = Agenda::whereMonth('created_at', Carbon::now()->month)->get();
+        try{
+            $startDate = Carbon::now()->subMonth(2)->startOfMonth();
+            $endDate = Carbon::now()->addMonth(2)->endOfMonth();
 
-        return view('user.agenda', );
-    //     if($request->ajax()) {
+            $data['startDate'] = $startDate->format('Y-m-d');
+            $data['endDate'] = $endDate->format('Y-m-d');
+            $data['agendas'] = Agenda::whereBetween('date', [$startDate, $endDate])->get();
 
-    //         $data['agendas'] = Agenda::whereDate('start', '>=', Carbon::ncreateFromFormat('Y-m-d', '2025-01-01'))
-    //                   ->whereDate('end',   '<=', createFromFormat('Y-m-d', '2016-03-31'))
-    //                   ->get(['id', 'activity', 'start', 'end']);
-
-    //         return response()->json($data);
-    //    }
+            return view('user.agenda', $data);
+        } catch(Exception $error) {
+            dd($error);
+        }
     }
 
     /**

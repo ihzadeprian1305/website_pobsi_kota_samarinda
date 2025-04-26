@@ -31,26 +31,11 @@
     <div class="col-lg-4">
         <div class="top-downloaded">
         <div class="heading-section">
-            <h4><em>Agenda</em> Hari Ini</h4>
+            <h4><em>Agenda</em> POBSI</h4>
         </div>
-        <ul>
-        @if(count($agendas) > 0)
-            @foreach ($agendas as $a)
-                <li>
-                    <h3>Agenda {{ $loop->index + 1 }}</h3>
-                    <img src="assets/images/game-01.jpg" alt="" class="templatemo-item">
-                    <h4>{{ $a->activity }}</h4>
-                    <h6>{{ $a->time }}</h6>
-                    <h4>{{ $a->attended_by }}</h4>
-                    <h6>{{ $a->location }}</h6>
-                </li>
-            @endforeach
-        @else
-            <h4 class="text-center mb-3">Tidak Ada Agenda</h4>
-        @endif
-        </ul>
+        <div id="calendar" class="mb-3"></div>
         <div class="text-button">
-            <a href="profile.html">Lihat Semua Agenda</a>
+            <a href="{{ url('/agendas') }}">Lihat Semua Agenda</a>
         </div>
         </div>
     </div>
@@ -277,6 +262,49 @@
             </div>
           </div> --}}
           <!-- ***** Banner End ***** -->
+          <script>
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridDay',
+                    locale: 'id',
+                    aspectRatio: 1.2,
+                    buttonText: {
+                        today: 'Hari Ini'
+                    },
+                    headerToolbar: {
+                        left: 'title',
+                        center: '',
+                        right: ''
+                    },
+                    footerToolbar: {
+                        left: 'prev',
+                        center: 'today',
+                        right: 'next'
+                    },
+                    events: [
+                        @foreach ($agendas as $a)
+                            {
+                                title : '{{ $a->activity }}',
+                                start : '{{ $a->date }}',
+                                end : '{{ $a->date }}',
+                            },
+                        @endforeach
+                    ],
+                    eventDidMount: function(info) {
+                        info.el.setAttribute('title', 'Deskripsi: {{ $a->description }} Waktu: {{ $a->time }}')
+                    },
+                    validRange: {
+                        start: '{{ $startDate }}',
+                        end: '{{ $endDate }}'
+                    },
+                });
+
+                calendar.render();
+            });
+
+        </script>
 @endsection
 
 

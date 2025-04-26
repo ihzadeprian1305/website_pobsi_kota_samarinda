@@ -9,5 +9,6 @@
   <script src="{{ asset('assets/user/assets/js/popup.js') }}"></script>
   <script src="{{ asset('assets/user/assets/js/fancybox/fancybox.umd.js') }}"></script>
   <script src="{{ asset('assets/user/assets/js/masonry/masonry.pkgd.min.js') }}"></script>
+  <script src='{{ asset('assets/user/assets/js/fullcalendar/main.js') }}'></script>
   <script src="{{ asset('assets/user/assets/js/custom.js') }}"></script>
 

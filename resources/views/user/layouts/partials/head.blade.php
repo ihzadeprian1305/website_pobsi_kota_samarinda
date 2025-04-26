@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('assets/user/assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/user/assets/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/user/assets/js/fancybox/fancybox.css') }}">
+    <link href='{{ asset('assets/user/assets/js/fullcalendar/main.css') }}' rel='stylesheet' />
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 
 <!--

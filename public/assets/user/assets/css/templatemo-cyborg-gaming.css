@@ -1144,6 +1144,53 @@ Gaming Library Style
     color: #fefd02;
 }
 
+.agenda-detail {
+    padding: 30px;
+    background-color: #1f2122;
+    border-radius: 23px;
+}
+
+.agenda-detail-item {
+    max-height: 300px;
+}
+
+.agenda-detail-item .thumb {
+    height: 300px; /* Set a fixed height */
+    overflow: hidden; /* Prevent any overflow */
+}
+
+.agenda-detail-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 23px;
+}
+
+.agenda-detail-container {
+    position: relative;
+    width: 100%;
+}
+
+.agenda-detail-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 23px;
+}
+
+.agenda-detail-content {
+    padding: 30px;
+    background-color: #27292a;
+    border-radius: 23px;
+}
+
+.agenda-detail-content h3, .pool-house-detail-content h4{
+    color: #fefd02;
+}
+
 .athlete {
   margin-top: 60px;
   padding: 30px;
