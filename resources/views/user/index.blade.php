@@ -1,5 +1,7 @@
 @extends('user.layouts.app')
 @section('container')
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
     <!-- ***** Home Slider Games Start ***** -->
     <div class="row mb-5">
     <div class="col-lg-8">
@@ -287,13 +289,21 @@
                         @foreach ($agendas as $a)
                             {
                                 title : '{{ $a->activity }}',
+                                description : '{{ $a->description }}',
+                                time : '{{ $a->time }}',
+                                attended_by : '{{ $a->attended_by }}',
+                                location : '{{ $a->location }}',
                                 start : '{{ $a->date }}',
                                 end : '{{ $a->date }}',
                             },
                         @endforeach
                     ],
                     eventDidMount: function(info) {
-                        info.el.setAttribute('title', 'Deskripsi: {{ $a->description }} Waktu: {{ $a->time }}')
+                        tippy(info.el, {
+                            content: 'Deskripsi: ' + info.event.extendedProps.description + '<br>Waktu: ' + info.event.extendedProps.time + '<br>Dihadiri oleh: ' + info.event.extendedProps.attended_by + '<br>Lokasi: ' + info.event.extendedProps.location,
+                            allowHTML: true,
+                            theme: 'light-border',
+                        });
                     },
                     validRange: {
                         start: '{{ $startDate }}',
