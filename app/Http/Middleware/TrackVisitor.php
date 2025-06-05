@@ -17,6 +17,10 @@ class TrackVisitor
      */
     public function handle(Request $request, Closure $next)
     {
+        if ($request->is('admin') || $request->is('admin/*')) {
+            return $next($request);
+        }
+
         $ip = $request->ip();
         $today = Carbon::today();
 
