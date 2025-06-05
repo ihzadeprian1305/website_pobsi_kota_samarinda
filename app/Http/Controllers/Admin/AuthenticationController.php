@@ -17,8 +17,8 @@ class AuthenticationController extends Controller
     public function checkLogin(Request $request){
         try {
             $validator = Validator::make($request->all(), [
-                'email_or_username' => ['required'],
-                'password' => ['required'],
+                'email_or_username' => ['required', 'string'],
+                'password' => ['required', 'string'],
             ]);
 
             if($validator->fails()){

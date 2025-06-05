@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use Mews\Purifier\Facades\Purifier;
 use Yajra\DataTables\Facades\DataTables;
 
 class PoolHouseController extends Controller
@@ -56,14 +57,14 @@ class PoolHouseController extends Controller
             $validator = Validator::make($request->all(), [
                 'image' => ['required', 'array'],
                 'image.*' => ['file', 'mimes:jpeg,png,jpg', 'max:2048'],
-                'name' => ['required'],
-                'address' => ['required'],
-                'link_address' => ['required'],
-                'description' => ['required'],
-                'owner_name' => ['required'],
-                'phone_number' => ['required'],
-                'open_time' => ['required'],
-                'close_time' => ['required'],
+                'name' => ['required', 'string'],
+                'address' => ['required', 'string'],
+                'link_address' => ['required', 'string'],
+                'description' => ['required', 'string'],
+                'owner_name' => ['required', 'string'],
+                'phone_number' => ['required', 'string'],
+                'open_time' => ['required', 'string'],
+                'close_time' => ['required', 'string'],
             ]);
 
             if($validator->fails()){
@@ -73,9 +74,9 @@ class PoolHouseController extends Controller
             DB::transaction(function() use($request) {
                     $pool_house = PoolHouse::create([
                         'name' => $request->name,
-                        'address' => $request->address,
-                        'link_address' => $request->link_address,
-                        'description' => $request->description,
+                        'address' => Purifier::clean($request->address, 'default'),
+                        'link_address' => Purifier::clean($request->link_address, 'default'),
+                        'description' => Purifier::clean($request->description, 'default'),
                         'owner_name' => $request->owner_name,
                         'phone_number' => $request->phone_number,
                         'open_time' => $request->open_time,
@@ -140,27 +141,27 @@ class PoolHouseController extends Controller
                 $validator = Validator::make($request->all(), [
                     'image' => ['array'],
                     'image.*' => ['file', 'mimes:jpeg,png,jpg', 'max:2048'],
-                    'name' => ['required'],
-                    'address' => ['required'],
-                    'link_address' => ['required'],
-                    'description' => ['required'],
-                    'owner_name' => ['required'],
-                    'phone_number' => ['required'],
-                    'open_time' => ['required'],
-                    'close_time' => ['required'],
+                    'name' => ['required', 'string'],
+                    'address' => ['required', 'string'],
+                    'link_address' => ['required', 'string'],
+                    'description' => ['required', 'string'],
+                    'owner_name' => ['required', 'string'],
+                    'phone_number' => ['required', 'string'],
+                    'open_time' => ['required', 'string'],
+                    'close_time' => ['required', 'string'],
                 ]);
             } else {
                 $validator = Validator::make($request->all(), [
                     'image' => ['required', 'array'],
                     'image.*' => ['file', 'mimes:jpeg,png,jpg', 'max:2048'],
-                    'name' => ['required'],
-                    'address' => ['required'],
-                    'link_address' => ['required'],
-                    'description' => ['required'],
-                    'owner_name' => ['required'],
-                    'phone_number' => ['required'],
-                    'open_time' => ['required'],
-                    'close_time' => ['required'],
+                    'name' => ['required', 'string'],
+                    'address' => ['required', 'string'],
+                    'link_address' => ['required', 'string'],
+                    'description' => ['required', 'string'],
+                    'owner_name' => ['required', 'string'],
+                    'phone_number' => ['required', 'string'],
+                    'open_time' => ['required', 'string'],
+                    'close_time' => ['required', 'string'],
                 ]);
             }
 
@@ -195,7 +196,10 @@ class PoolHouseController extends Controller
                         ]);
                     }
                 } else{
+                    // dd(Purifier::clean($request->description, 'default'));
+                    // dd($request->name);
                     $poolHouse->update([
+                        // 'name' => Purifier::clean($request->name, 'input'),
                         'name' => $request->name,
                         'address' => $request->address,
                         'link_address' => $request->link_address,

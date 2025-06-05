@@ -6,18 +6,29 @@ use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\NewsTag;
+use App\Models\NewsView;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UserNewsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
+            $validator = Validator::make($request->all(), [
+                    'search' => ['string'],
+            ]);
+
+            if($validator->fails()){
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
             if(request('category')){
                 $data['title_category'] = NewsCategory::firstWhere('id', request('category'));
             }
@@ -66,6 +77,22 @@ class UserNewsController extends Controller
     public function show(News $news)
     {
         try {
+            $ipAddress = request()->ip();
+            $today = Carbon::today();
+
+            $alreadyViewedToday = NewsView::where('news_id', $news->id)
+                ->where('ip_address', $ipAddress)
+                ->whereDate('viewed_at', $today)
+                ->exists();
+
+            if (!$alreadyViewedToday) {
+                NewsView::create([
+                    'news_id' => $news->id,
+                    'ip_address' => $ipAddress,
+                    'viewed_at' => now(),
+                ]);
+            }
+
             $data['news'] = $news;
             $data['all_news'] = News::take(3)->latest()->get();
             $data['news_categories'] = NewsCategory::withCount('news')->orderBy('news_count', 'desc')->limit(5)->get();
@@ -101,8 +128,16 @@ class UserNewsController extends Controller
         //
     }
 
-    public function newsCategories()
+    public function newsCategories(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+                'search' => ['string'],
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         try {
             $data['news_categories'] = NewsCategory::withCount('news')->orderBy('news_count', 'desc')->filter(request(['search']))->paginate(10);
 
@@ -124,9 +159,17 @@ class UserNewsController extends Controller
         }
     }
 
-    public function newsTags()
+    public function newsTags(Request $request)
     {
         try {
+            $validator = Validator::make($request->all(), [
+                    'search' => ['string'],
+            ]);
+
+            if($validator->fails()){
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
             $data['news_tags'] = NewsTag::withCount('news')->orderBy('news_count', 'desc')->filter(request(['search']))->paginate(10);
 
             return view('user.news_tags', $data);

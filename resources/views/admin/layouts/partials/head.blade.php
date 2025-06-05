@@ -1,5 +1,12 @@
 <head>
     <meta charset="UTF-8">
+    <!-- <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' https://cdn.jsdelivr.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        frame-src https://www.youtube.com https://www.youtube-nocookie.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data:; "> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POBSI Kota Samarinda</title>
     <link rel="shortcut icon" href="{{ asset('assets/static/images/logo/logo_pobsi_samarinda_1.svg') }}" type="image/x-icon">

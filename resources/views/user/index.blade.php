@@ -97,7 +97,7 @@
                                 <div class="hover-effect">
                                     <div class="content">
                                         <ul>
-                                            <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
+                                            <li><a href="#"><i class="fa fa-eye"></i> {{ $n->news_views()->count() }}</a></li>
                                             <li><a href="{{ url('/news?category=' . $n->news_categories->id) }}"><i class="fa fa-file"></i> {{ $n->news_categories->name }}</a></li>
                                         </ul>
                                     </div>

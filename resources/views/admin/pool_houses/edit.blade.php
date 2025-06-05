@@ -49,7 +49,7 @@
                     </div>
                     <div class="form-group">
                         <label for="pool_houses_link_address_update">Tautan Alamat (Google Maps->Share->Embed a Map)</label>
-                        <textarea name="link_address" id="pool_houses_link_address_update">{{ old('address', htmlspecialchars($poolHouse->link_address, ENT_QUOTES, 'UTF-8')) }}</textarea>
+                        <textarea name="link_address" id="pool_houses_link_address_update">{!! old('address', htmlspecialchars($poolHouse->link_address, ENT_QUOTES, 'UTF-8')) !!}</textarea>
                         @error('link_address')
                         <div class="text-danger mt-2" role="alert" id="alert_pool_houses_link_address_update">{{ $message }}</div>
                         @enderror

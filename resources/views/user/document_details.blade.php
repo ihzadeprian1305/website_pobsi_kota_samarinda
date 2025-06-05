@@ -64,7 +64,7 @@
                             <div class="hover-effect">
                                 <div class="content">
                                     <ul>
-                                        <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
+                                        <li><a href="#"><i class="fa fa-eye"></i> {{ $d->document_views()->count() }}</a></li>
                                         <li><a href="{{ url('/documents?category=' . $d->document_categories->id) }}"><i class="fa fa-file"></i> {{ $d->document_categories->name }}</a></li>
                                     </ul>
                                 </div>

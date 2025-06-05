@@ -104,6 +104,18 @@ class DocumentController extends Controller
 
                     $document_id = $document->id;
 
+                    $originalCoverImageName = $request->file('cover_image')->getClientOriginalName();
+
+                    $uniqueCoverImageName =  time() . '_' . $originalCoverImageName;
+
+                    $imageCoverImagePath = $request->file('cover_image')->storeAs('document-cover-images', $uniqueCoverImageName);
+
+                    DocumentCoverImage::create([
+                        'image' => $imageCoverImagePath,
+                        'image_name' => $originalCoverImageName,
+                        'document_id' => $document_id
+                    ]);
+
                     foreach ($request->file('file') as $file) {
                         $originalName = $file->getClientOriginalName();
 
@@ -131,18 +143,6 @@ class DocumentController extends Controller
                     ]);
 
                     $document_id = $document->id;
-
-                    $originalCoverImageName = $request->file('cover_image')->getClientOriginalName();
-
-                    $uniqueCoverImageName =  time() . '_' . $originalCoverImageName;
-
-                    $imageCoverImagePath = $request->file('cover_image')->storeAs('document-cover-images', $uniqueCoverImageName);
-
-                    DocumentCoverImage::create([
-                        'image' => $imageCoverImagePath,
-                        'image_name' => $originalCoverImageName,
-                        'document_id' => $document_id
-                    ]);
 
                     foreach ($request->file('file') as $file) {
                         $originalName = $file->getClientOriginalName();

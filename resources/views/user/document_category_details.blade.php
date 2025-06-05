@@ -23,7 +23,7 @@
                         <li><a href="{{ url('/documents?author='. $document->user_posted_by->id) }}"><i class="fa fa-user"></i> {{ $document->user_posted_by->user_data->name }}</a></li>
                         <li><a href="{{ url('/documents?category=' . $document->document_categories->id) }}"><i class="fa fa-folder"></i> {{ $document->document_categories->name }}</a></li>
                         <li><i class="fa fa-calendar"></i> {{ $document->created_at }}</li>
-                        <li><i class="fa fa-eye"></i> -</li>
+                        <li><i class="fa fa-eye"></i> {{ $document->document_views()->count() }}</li>
                       </ul>
                     </div>
               </div>

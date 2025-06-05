@@ -23,7 +23,7 @@
                         <li><a href="{{ url('/news?author='. $news->user_created_by->id) }}"><i class="fa fa-user"></i> {{ $news->user_created_by->user_data->name }}</a></li>
                         <li><a href="{{ url('/news?category=' . $news->news_categories->id) }}"><i class="fa fa-folder"></i> {{ $news->news_categories->name }}</a></li>
                         <li><i class="fa fa-calendar"></i> {{ $news->created_at }}</li>
-                        <li><i class="fa fa-eye"></i> -</li>
+                        <li><i class="fa fa-eye"></i> {{ $news->news_views()->count() }}</li>
                       </ul>
                     </div>
               </div>

@@ -5,18 +5,29 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use App\Models\DocumentCategory;
+use App\Models\DocumentView;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UserDocumentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
+            $validator = Validator::make($request->all(), [
+                    'search' => ['string'],
+            ]);
+
+            if($validator->fails()){
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
             $document_categories = DocumentCategory::withCount('documents')->latest()->filter(request(['search']))->paginate(10);
 
             $data['document_categories'] = $document_categories;
@@ -70,6 +81,22 @@ class UserDocumentController extends Controller
     public function show(DocumentCategory $documentCategory, Document $document)
     {
         try {
+            $ipAddress = request()->ip();
+            $today = Carbon::today();
+
+            $alreadyViewedToday = DocumentView::where('document_id', $document->id)
+                ->where('ip_address', $ipAddress)
+                ->whereDate('viewed_at', $today)
+                ->exists();
+
+            if (!$alreadyViewedToday) {
+                DocumentView::create([
+                    'document_id' => $document->id,
+                    'ip_address' => $ipAddress,
+                    'viewed_at' => now(),
+                ]);
+            }
+
             $data['document'] = $document;
             $data['document_category'] = $documentCategory;
             $data['document_categories'] = DocumentCategory::withCount('documents')->orderBy('documents_count', 'desc')->limit(5)->get();

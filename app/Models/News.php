@@ -73,4 +73,12 @@ class News extends Model
     public function news_images(){
         return $this->hasMany(NewsImage::class, 'news_id');
     }
+
+    public function news_views(){
+        return $this->hasMany(NewsView::class);
+    }
+
+    public function news_views_today(){
+        return $this->hasMany(NewsView::class)->whereDate('viewed_at', today());
+    }
 }

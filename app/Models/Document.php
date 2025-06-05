@@ -58,4 +58,12 @@ class Document extends Model
     public function user_posted_by(){
         return $this->belongsTo(User::class, 'posted_by');
     }
+
+    public function document_views(){
+        return $this->hasMany(DocumentView::class);
+    }
+
+    public function document_views_today(){
+        return $this->hasMany(DocumentView::class)->whereDate('viewed_at', today());
+    }
 }
